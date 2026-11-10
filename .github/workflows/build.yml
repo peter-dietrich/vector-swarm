@@ -1,0 +1,11 @@
+name: macOS build
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: xcodebuild -project VectorSwarm.xcodeproj -scheme VectorSwarm -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO build
