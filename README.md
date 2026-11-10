@@ -1,5 +1,14 @@
 # Vector Swarm
 
+## Maintainer documentation (2026 audit)
+
+- [Architecture and development](docs/DEVELOPMENT.md) — source and local workflow.
+- [Build/QA checklist](docs/QA_CHECKLIST.md) — repeatable checks and CI limits.
+- [Release and signing](docs/RELEASE.md) — official assets, Apple notarization and Fun City installation.
+- [Licensing and provenance](docs/LICENSING.md) — MIT scope, third-party rights and clearance tasks.
+- [Third-party notices](THIRD_PARTY_NOTICES.md) — observed stack, inventory and review status.
+
+
 **Vector Swarm** is an original, Galaga-style fixed-screen formation shooter for the **Fun City** macOS arcade, with neon vector **Classic** and glowing **Modern** display modes.
 
 ## Gameplay
@@ -32,4 +41,4 @@ Bundle identifier: `io.vectorswarm.game`. In Fun City, use **LOCATE GAME** if ma
 Save/Load stores a checkpoint (score, lives, wave, rescued wingmen and high score) in local UserDefaults. It restores at the beginning of the saved wave, not the exact projectile positions.
 
 ## Development status
-Initial playable implementation; native Xcode build and gameplay validation are still required. All graphics are drawn programmatically; the game is a tribute to classic formation shooters, not a reproduction of licensed artwork.
+A GitHub Actions macOS build on the audited main commit completed successfully (2026-11-09). Manual game-play testing on a Mac is still required. All graphics are drawn programmatically; the game is a tribute to classic formation shooters, not a reproduction of licensed artwork.
