@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - ci/manual-signed-release-pilot
+      - ci/swarm-beta-pilot-signed
     paths:
       - .github/workflows/signed-release.yml
   workflow_dispatch:
