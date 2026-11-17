@@ -1,11 +1,12 @@
 name: Vector Swarm beta signing and controlled prerelease
 
 on:
-  # Push on this isolated branch exercises the beta signing pipeline
-  # without publishing anything. Publication requires explicit dispatch.
+  # The dedicated publication branch is a one-shot controlled public beta.
+  # Normal stable releases remain manually gated.
   push:
     branches:
       - ci/swarm-beta-pilot-signed
+      - ci/publish-vector-swarm-beta1
     paths:
       - .github/workflows/beta-release.yml
   workflow_dispatch:
@@ -29,6 +30,18 @@ jobs:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Guard one-shot beta publication source
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/ci/publish-vector-swarm-beta1' }}
+        run: |
+          set -euo pipefail
+          CHANGED="$(git diff --name-only b14bc96ee3116a0c31c1d41ac5f957cf5bf25658 HEAD)"
+          [[ "$CHANGED" == ".github/workflows/beta-release.yml" ]] || {
+            echo "::error::Unexpected source files changed since approved Swarm beta base"
+            exit 1
+          }
 
       - name: Validate version and build
         env:
@@ -112,7 +125,7 @@ jobs:
           retention-days: 7
 
       - name: Publish PUBLIC beta prerelease (explicit opt-in)
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_prerelease }}
+        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/ci/publish-vector-swarm-beta1') || (github.event_name == 'workflow_dispatch' && inputs.publish_prerelease) }}
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_VERSION: ${{ github.event_name == 'push' && 'v0.1.0-beta.1' || inputs.beta_version }}
