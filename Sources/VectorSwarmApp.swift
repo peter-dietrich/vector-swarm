@@ -4,6 +4,7 @@ import SpriteKit
 
 @main
 struct VectorSwarmApp: App {
+    @NSApplicationDelegateAdaptor(ArcadeIconAppDelegate.self) private var iconDelegate
     var body: some Scene {
         WindowGroup("Vector Swarm") {
             SwarmWindow().preferredColorScheme(.dark)
