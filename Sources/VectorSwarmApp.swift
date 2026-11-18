@@ -10,7 +10,7 @@ struct VectorSwarmApp: App {
                 .frame(minWidth: 880, minHeight: 640)
         }
         .defaultSize(width: 1180, height: 810)
-        .commands { CommandGroup(replacing: .newItem) {} }
+        .commands { CommandGroup(replacing: .newItem) {} GameHelpCommands() }
     }
 }
 
